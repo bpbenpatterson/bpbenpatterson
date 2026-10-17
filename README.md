@@ -4,7 +4,17 @@ Senior staff software engineer — 13 years shipping production C/C++ and Python
 
 I use agent harnesses every day for code review, debugging, tooling, and research. Most of that work sits on proprietary, access-restricted hardware, so it can't live here. The public projects below are things I designed, built, and tested myself, with agents as part of the workflow.
 
-## What's here
+## Agent tooling
+
+| Repo | What it is |
+|---|---|
+| [build-mcp](https://github.com/bpbenpatterson/build-mcp) | An MCP server that parses noisy build output into structured `{file, line, severity, message}` compiler diagnostics, so an agent can act on errors instead of burning its context window on log spam. |
+| [audiobook](https://github.com/bpbenpatterson/audiobook) | An agent skill that narrates a Markdown book with **local** Kokoro-82M TTS — fully offline, producing per-chapter MP3s plus an M4B with chapter markers, behind a loudness and silence quality gate. |
+| [yoto](https://github.com/bpbenpatterson/yoto) | A dependency-free Python CLI for the Yoto Developer API: OAuth2 PKCE auth, audio upload, MYO card management. Dry-run-first, so destructive operations preview before they run. |
+
+Those three compose into one pipeline: an agent writes a book, a local ONNX model narrates it, and a CLI uploads it to a physical device over OAuth2 — driven from a single prompt.
+
+## Apps and games
 
 | Repo | What it is |
 |---|---|
@@ -16,7 +26,7 @@ I use agent harnesses every day for code review, debugging, tooling, and researc
 
 **Agents as leverage; verification as the job.** I check generated code against the compiler, the tests, and real hardware behavior before acting on it — a habit from safety-critical work that transfers directly to non-deterministic systems.
 
-**Context is the real constraint.** I built an MCP server that hands an agent structured `{file, line, severity, message}` compiler diagnostics instead of dumping thousands of lines of raw build output into its context window.
+**Context is the real constraint.** `build-mcp` exists because dumping thousands of lines of raw build output into a context window is how you get a confident, wrong answer. Structured diagnostics beat more tokens.
 
 **Tooling has to meet people where they are.** I wrote roughly 10–15 helper and automation scripts over about 18 months; 3–5 of them were actually adopted by other engineers. The adoption gap taught me more than the scripts did.
 
